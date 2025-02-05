@@ -1,49 +1,97 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
-import styles from "./ChatInterface.module.css";
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const ChatInterface = () => {
-  const [messages, setMessages] = useState<string[]>([]);
-  const [currentMessage, setCurrentMessage] = useState(""); // Message being typed
-//   const [isTyping, setIsTyping] = useState(false);
+declare global {
+  interface Window {
+    responsiveVoice: {
+      speak: (text: string, voice: string, options?: object) => void
+      getVoices: () => { name: string }[]
+      cancel: () => void
+      voiceSupport: () => boolean
+    }
+  }
+}
 
-  const receiveMessage = (message: string) => {
-    // setIsTyping(true);
-    setCurrentMessage(""); // Reset before typing starts
-
-    let index = 0;
-    const typingInterval = setInterval(() => {
-      setCurrentMessage((prev) => prev + message[index]); // Ensure previous state is kept
-      index++;
-
-      if (index >= message.length) {
-        clearInterval(typingInterval);
-        setTimeout(() => {
-        //   setIsTyping(false);
-          setMessages((prev) => [...prev, message]); // Store full message
-          setCurrentMessage(""); // Reset current message
-        }, 500);
-      }
-    }, 50); // Adjust typing speed (milliseconds per character)
-  };
+export default function TextToSpeech() {
+  const [text, setText] = useState("")
+  const [voice, setVoice] = useState("UK English Female")
+  const [voices, setVoices] = useState<string[]>([])
+  const [isSpeaking, setIsSpeaking] = useState(false)
+  const [isSupported, setIsSupported] = useState(false)
 
   useEffect(() => {
-    setTimeout(() => {
-      receiveMessage("Hello! hello ello ell lloe");
-    }, 1000);
-  }, []);
+    if (typeof window !== "undefined" && window.responsiveVoice) {
+      setIsSupported(window.responsiveVoice.voiceSupport())
+      const availableVoices = window.responsiveVoice.getVoices()
+      setVoices(availableVoices.map((v) => v.name))
+    }
+  }, [])
+
+  const handleSpeak = () => {
+    if (typeof window !== "undefined" && window.responsiveVoice && isSupported) {
+      if (isSpeaking) {
+        window.responsiveVoice.cancel()
+        setIsSpeaking(false)
+      } else {
+        window.responsiveVoice.speak(text, voice, {
+          onstart: () => setIsSpeaking(true),
+          onend: () => setIsSpeaking(false),
+        })
+      }
+    }
+  }
+
+  if (!isSupported) {
+    return (
+      <div className="container mx-auto p-4">
+        <Card className="w-full max-w-md mx-auto">
+          <CardContent>
+            <p className="text-center text-red-500">Text-to-speech is not supported in your browser.</p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
 
   return (
-    <div className={styles.chatContainer}>
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>{msg}</li>
-        ))}
-        {currentMessage && <li>{currentMessage}</li>}
-      </ul>
+    <div className="container mx-auto p-4">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader>
+          <CardTitle>Text to Speech</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Textarea
+            placeholder="Enter text to convert to speech"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="mb-4"
+          />
+          <Select onValueChange={setVoice} value={voice}>
+            <SelectTrigger className="mb-4">
+              <SelectValue placeholder="Select a voice" />
+            </SelectTrigger>
+            <SelectContent>
+              {voices.map((v) => (
+                <SelectItem key={v} value={v}>
+                  {v}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button
+            onClick={handleSpeak}
+            className={`w-full ${isSpeaking ? "bg-red-500 hover:bg-red-600" : "bg-blue-500 hover:bg-blue-600"}`}
+            disabled={!text}
+          >
+            {isSpeaking ? "Stop Speaking" : "Speak"}
+          </Button>
+        </CardContent>
+      </Card>
     </div>
-  );
-};
-
-export default ChatInterface;
+  )
+}
