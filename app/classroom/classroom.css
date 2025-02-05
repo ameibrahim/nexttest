@@ -1,0 +1,170 @@
+/* * {
+    margin: 0 0;
+    padding: 0 0;
+    font-family: Avenir Next;
+    box-sizing: border-box;
+} */
+
+:root {
+    --accent: rgb(155, 0, 0);
+}
+
+
+.classroom-container {
+    width: calc(100vw - 100px);
+    height: calc(100vh - 100px);
+    /* border: 1px solid red; */
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: grid;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.classroom-header {
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9.5px);
+    -webkit-backdrop-filter: blur(9.5px);
+
+    z-index: 1;
+    position: absolute;
+    top: 0px;
+    height: 70px;
+    width: 100%;
+    padding: 13px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.classroom-left-action-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 10px;
+    justify-self: start;
+    align-items: center;
+}
+
+.classroom-left-action-container > * {
+    display: grid;
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+    transition: 300ms all;
+    place-items: center;
+    border-radius: 5px;
+}
+
+.classroom-left-action-container > *:hover {
+    background-color: var(--accent);
+    transition: 300ms all;
+}
+.classroom-left-action-container > *:hover > img {
+    filter: invert(100%);
+    transition: 300ms all;
+}
+
+.classroom-left-action-container > * > img {
+    height: 20px;
+    width: 20px;
+}
+
+.classroom-right-action-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 10px;
+    justify-self: end;
+    align-items: center;
+}
+
+.button {
+    padding: 7px 26px;
+    color: white;
+    background: var(--accent);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.classroom-body {
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 100%;
+    align-self: start;
+    /* display: grid; */
+    position: relative;
+}
+
+.classroom-timeline-panel {
+    width: 400px;
+    position: absolute;
+    left: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: 300ms all;
+    height: 100%;
+    padding-top: 70px;
+
+    /* border: 1px solid yellow; */
+
+    /* TODO:  remove-scroll-bars */
+}
+
+.classroom-main-content-wrapper {
+    width: calc(100% - 400px);
+    position: absolute;
+    left: 400px;
+    /* border: 10px solid green; */
+    height: 100%;
+    transition: 300ms all;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 10px;
+    padding: 70px 10px 10px 10px;
+    overflow: scroll;
+}
+
+.classroom-course-select-panel,
+.classroom-lecture-select-panel {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid red; */
+    position: absolute;
+    left: 0;
+    transition: 300ms;
+}
+
+.classroom-lecture-select-panel {
+    border: 1px solid purple;
+    left: 100%;
+}
+
+.classroom-main-content {
+    width: 100%;
+}
+
+.classroom-dux-wrapper {
+    width: 300px;
+    height: 100%;
+    top: 70px;
+}
+
+.dux-element {
+    position: sticky;
+    top: 0px;
+}
+
+.dux-element img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.attempt-pdf-render {
+    width: 100%;
+    background: blue;
+    border-radius: 10px;
+    height: 2000px;
+}

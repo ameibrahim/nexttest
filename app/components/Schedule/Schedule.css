@@ -1,0 +1,63 @@
+.selectElement {
+    border-color: #61616B !important;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: 0px;
+}
+
+.middleTimeInputWrapper{
+    border: 2px solid #61616B !important;
+    border-radius: 0px;
+    /* border-left-width: 0px !important; */
+    border-right-width: 0px !important;
+}
+
+.lastTimeInputWrapper{
+    border: 2px solid #61616B !important;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.lastTimeInputWrapper:hover, .middleTimeInputWrapper:hover {
+    border-color: var(--accent) !important;
+}
+
+.middleTimeBase:hover + .lastTimeBase .lastTimeInputWrapper {
+    border-left-color: var(--accent) !important;
+}
+
+.selectElementBase:hover + .middleTimeBase .middleTimeInputWrapper {
+    border-left-color: var(--accent) !important;
+}
+
+.selectElement[data-hover]{
+    border-color: var(--accent) !important;
+}
+
+.selectValue{
+    color: var(--accent) !important;
+    font-weight: bold;
+}
+
+.schedule-element{
+    display: grid;
+    grid-template-columns: 1fr minmax(100px, 200px) minmax(100px, 200px) auto;
+}
+
+.selectListBox > ul > li {
+    padding: 13px;
+    color: var(--accent);
+}
+
+.selectItemUnique[data-hover], .selectItemUnique[data-focus]  {
+    background-color: var(--accent) !important;
+    color: white !important;
+}
+
+.selectListBox > ul > li > span {
+    font-weight: 800 !important;
+}
+
+.remove-button {
+    margin-left: 20px;
+}

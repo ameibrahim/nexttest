@@ -1,0 +1,16 @@
+{
+    "Translations": {
+        "title": "Hello",
+        "Select a day": "Select a day",
+        "Monday": "Monday",
+        "Tuesday": "Tuesday",
+        "Wednesday": "Wednesday",
+        "Thursday": "Thursday",
+        "Friday": "Friday"
+    },
+    "LocaleSwitcher": {
+        "tr": "Türkçe",
+        "en": "English",
+        "label": "Language"
+    }
+}

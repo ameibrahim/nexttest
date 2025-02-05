@@ -1,0 +1,7 @@
+.actions-row{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: auto auto;
+    border: 1px solid red;
+    justify-content: center;
+}
